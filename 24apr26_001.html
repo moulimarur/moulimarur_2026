@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 01 · 24 April 2026 · moulimarur.com</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cyan: #00A3D3;
+    --black: #080808;
+    --off: #e8e2d6;
+    --mid: #888;
+    --faint: #1a1a1a;
+    --rule: #2a2a2a;
+  }
+
+  html, body {
+    background: var(--black);
+    color: var(--off);
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,163,211,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,163,211,0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* MASTHEAD */
+  .masthead {
+    border-bottom: 3px solid var(--cyan);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .masthead-label {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 0.8rem;
+  }
+
+  .masthead h1 {
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--off);
+    margin-bottom: 0.3rem;
+  }
+
+  .masthead h1 span { color: var(--cyan); }
+
+  .masthead-sub {
+    font-size: 13px;
+    color: var(--mid);
+    letter-spacing: 0.08em;
+    font-weight: 100;
+  }
+
+  /* SESSION META */
+  .session-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    background: var(--faint);
+    border-left: 3px solid var(--cyan);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 3rem;
+    font-size: 12px;
+  }
+
+  .meta-item strong {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 4px;
+    font-weight: 400;
+  }
+
+  .meta-item span {
+    color: var(--off);
+    font-weight: 300;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 3rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 2rem;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 0.8rem;
+  }
+
+  .section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--off);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  .section p {
+    font-size: 14px;
+    color: #b0a898;
+    margin-bottom: 0.8rem;
+    font-weight: 300;
+  }
+
+  /* DECISIONS LIST */
+  .decisions {
+    list-style: none;
+    margin-top: 1rem;
+  }
+
+  .decisions li {
+    font-size: 13px;
+    color: #b0a898;
+    padding: 0.6rem 0 0.6rem 1.2rem;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    font-weight: 300;
+  }
+
+  .decisions li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+  }
+
+  .decisions li strong {
+    color: var(--off);
+    font-weight: 400;
+  }
+
+  /* FILES PRODUCED */
+  .files-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .file-card {
+    background: var(--faint);
+    border: 1px solid var(--rule);
+    border-top: 2px solid var(--cyan);
+    padding: 1rem 1.25rem;
+  }
+
+  .file-card .file-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cyan);
+    margin-bottom: 4px;
+    word-break: break-all;
+  }
+
+  .file-card .file-desc {
+    font-size: 11px;
+    color: var(--mid);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* TERMINOLOGY */
+  .term-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0;
+    margin-top: 1rem;
+    border: 1px solid var(--rule);
+  }
+
+  .term-row {
+    display: contents;
+  }
+
+  .term-key {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cyan);
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    background: var(--faint);
+  }
+
+  .term-val {
+    font-size: 12px;
+    color: #b0a898;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    font-weight: 300;
+  }
+
+  /* NEXT SESSION */
+  .next {
+    background: var(--faint);
+    border-left: 3px solid var(--cyan);
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .next p {
+    font-size: 13px;
+    color: #b0a898;
+    margin-bottom: 0.5rem;
+  }
+
+  .next p:last-child { margin-bottom: 0; }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 4rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-left {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+  .footer-right {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cyan);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <p class="masthead-label">moulimarur.com · Session Archive</p>
+    <h1>Session <span>01</span></h1>
+    <p class="masthead-sub">24 April 2026 &nbsp;·&nbsp; Claude (Anthropic) &nbsp;·&nbsp; YCuBeD Publishers</p>
+  </div>
+
+  <div class="session-meta">
+    <div class="meta-item"><strong>Date</strong><span>24 April 2026</span></div>
+    <div class="meta-item"><strong>Duration</strong><span>Extended — ~3 hrs</span></div>
+    <div class="meta-item"><strong>AI Assistant</strong><span>Claude Sonnet · Anthropic</span></div>
+    <div class="meta-item"><strong>Platform</strong><span>claude.ai · Projects</span></div>
+    <div class="meta-item"><strong>Version</strong><span>v1.0</span></div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section">
+    <p class="section-label">01 · Identity & Biography</p>
+    <h2>DeZiGNeDPassPoRT_mgm</h2>
+    <p>Established the complete professional biography and master briefing document for Mouli G Marur — Designer, DocuMentor, Publisher. The document is designed as a single-upload context brief for any AI assistant, collaborator or production partner.</p>
+    <ul class="decisions">
+      <li><strong>Title coined:</strong> DeZiGNeDPassPoRT_mgm — typographic signature, capitalisation intentional, never to be corrected</li>
+      <li><strong>Professional titles:</strong> Designer. DocuMentor. Publisher.</li>
+      <li><strong>DocuMentor</strong> established as coined term — Designer + Documentary filmmaker + Mentor</li>
+      <li><strong>Four territories of practice:</strong> Madras / Indian subcontinent · Chicago / North America · Oxford & Berlin / Europe · Doha / Gulf</li>
+      <li><strong>Pan-Indian practice since 2011:</strong> Mumbai, New Delhi, Bangalore, Visakhapatnam, Madras</li>
+      <li><strong>Madras</strong> used for historical/biographical context · <strong>Chennai</strong> for current official address only</li>
+      <li><strong>MedRaas phonetic spelling retired</strong> — flagged as spoof, removed from all documents</li>
+      <li><strong>Colour standard:</strong> SWOP Coated C100 = #00A3D3 — all YCuBeD documents</li>
+      <li><strong>Phone corrected:</strong> +91 99404 78411</li>
+      <li><strong>Publisher address:</strong> C2, Sonali Apts, 11 Beach Road, Kalakshetra Colony, Besant Nagar, Chennai 600090</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section">
+    <p class="section-label">02 · Infrastructure Built</p>
+    <h2>Domains · GitHub · Live Site</h2>
+    <p>Complete digital infrastructure established for YCuBeD Publishers and Mouli G Marur from scratch in a single session.</p>
+    <ul class="decisions">
+      <li><strong>moulimarur.com</strong> registered on Namecheap · 5 years · March 2026</li>
+      <li><strong>whycubed.net · whycubed.org · whycubed.in</strong> registered · 3 years · ~$110 USD</li>
+      <li><strong>GitHub account</strong> created · username: moulimarur</li>
+      <li><strong>GitHub Desktop</strong> installed on MacBook Pro M1</li>
+      <li><strong>moulimarur_2026</strong> repository created, made public, GitHub Pages enabled</li>
+      <li><strong>yCuBeD_Master_2026</strong> repository created</li>
+      <li><strong>DNS configured</strong> on Namecheap — 4 A Records + CNAME pointing to GitHub Pages</li>
+      <li><strong>moulimarur.com LIVE</strong> at 1:47 AM · HTTPS certificate pending (auto-issues)</li>
+      <li><strong>moulimarur.com = TestBed + Archive + WorkingStudio</strong> — verify, validate, deliver flawfree before whycubed goes public</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section">
+    <p class="section-label">03 · Editorial & Publishing</p>
+    <h2>YCuBeD · Origins Series</h2>
+    <ul class="decisions">
+      <li><strong>YCuBeD Publishers</strong> — imprint based in Madras. Capitalisation intentional.</li>
+      <li><strong>Origins Series</strong> — active editorial and typographic works</li>
+      <li><strong>FreeThinKiNG</strong> — landscape editorial layout project (rules to be documented in full)</li>
+      <li><strong>Manu Maharaj Dual Portrait</strong> — The Historical King & Svayambhuva Manu, The Mythic First Man. Research conducted. Layout pending.</li>
+      <li><strong>Guardian/Manchester attribution standard</strong> — every factual claim named and sourced. Sources listed separately.</li>
+      <li><strong>No bullet points in body copy.</strong> Prose only.</li>
+      <li><strong>HTML versioned files</strong> as primary format. PDF on demand for print only.</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section">
+    <p class="section-label">04 · Typography</p>
+    <h2>Type System — moulimarur.com</h2>
+    <ul class="decisions">
+      <li><strong>Roboto Slab</strong> — current holding page font (Google Fonts, available now)</li>
+      <li><strong>UIFF DINThinker</strong> — Headlines / Display (commercial, local install required)</li>
+      <li><strong>Roboto Slab</strong> — Section heads / Subheads</li>
+      <li><strong>Bembo Book MT Pro</strong> — Body / Credentials / Specs (Monotype commercial, local install required)</li>
+      <li>@font-face implementation pending once local font files are referenced in repository</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section">
+    <p class="section-label">05 · House Terminology</p>
+    <h2>Established Terms</h2>
+    <div class="term-grid">
+      <div class="term-key">YCuBeD</div><div class="term-val">Publisher imprint. Capitalisation intentional.</div>
+      <div class="term-key">DocuMentor</div><div class="term-val">Designer + Documentary filmmaker + Mentor. Coined by MGM. Not a typo.</div>
+      <div class="term-key">DeZiGNeDPassPoRT</div><div class="term-val">Master briefing document. Typographic signature. Never correct capitalisation.</div>
+      <div class="term-key">ThamiZH</div><div class="term-val">Tamil pronunciation of Tamil. Use in YCuBeD publications.</div>
+      <div class="term-key">SRC</div><div class="term-val">Socially Responsible Creative. Coined MGM, Eye Magazine UK, 2007.</div>
+      <div class="term-key">FreeThinKiNG</div><div class="term-val">Project title. Capitalisation intentional.</div>
+      <div class="term-key">FieldMarshal Marur</div><div class="term-val">MGM's handle on ChatGPT.</div>
+      <div class="term-key">SWOP Cyan</div><div class="term-val">C100 M0 Y0 K0 SWOP Coated = #00A3D3. House accent colour.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section">
+    <p class="section-label">06 · Files Produced This Session</p>
+    <h2>Output Archive</h2>
+    <div class="files-grid">
+      <div class="file-card">
+        <div class="file-name">DeZiGNeDPassPoRT_mgm.docx</div>
+        <div class="file-desc">Master brief v1.0. SWOP Cyan. 12 sections. Complete biography, timeline, clients, projects, house style, AI instructions.</div>
+      </div>
+      <div class="file-card">
+        <div class="file-name">index.html</div>
+        <div class="file-desc">moulimarur.com holding page. Dark, Roboto Slab, SWOP Cyan. Live at moulimarur.com.</div>
+      </div>
+      <div class="file-card">
+        <div class="file-name">24apr26_001.html</div>
+        <div class="file-desc">This document. Complete session log. To be committed to moulimarur_2026 repository.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section">
+    <p class="section-label">07 · Next Session Agenda</p>
+    <h2>Tomorrow</h2>
+    <div class="next">
+      <p>— Set up whycubed.net holding page (same process as moulimarur.com)</p>
+      <p>— Build folder structure inside moulimarur_2026 repository</p>
+      <p>— Connect Google Calendar for deadline and renewal management</p>
+      <p>— Complete Manu Maharaj dual portrait layout (landscape, Guardian-rigorous)</p>
+      <p>— Update DeZiGNeDPassPoRT_mgm to v1.1 with corrected phone, address, career sequence</p>
+      <p>— Establish FreeThinKiNG editorial rules in full for the PassPoRT</p>
+      <p>— Domain renewal reminder: whycubed.net / .org / .in — April 2029</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="footer-left">moulimarur.com · 24apr26_001 · v1.0</span>
+    <span class="footer-right">24 April 2026 · YCuBeD Publishers</span>
+  </div>
+
+</div>
+</body>
+</html>
