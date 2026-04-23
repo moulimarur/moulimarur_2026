@@ -3,187 +3,189 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mouli G Marur — Designer · DocuMentor</title>
+<title>Mouli G Marur</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --cyan: #00A3D3;
     --black: #080808;
     --off: #e8e2d6;
     --mid: #888;
     --faint: #1a1a1a;
+    --rule: #2a2a2a;
+    --red: #c0392b;
   }
-
   html, body {
-    height: 100%;
+    min-height: 100vh;
     background: var(--black);
     color: var(--off);
     font-family: 'Roboto Slab', Georgia, serif;
-    overflow: hidden;
   }
-
-  body {
-    display: grid;
-    place-items: center;
-    min-height: 100vh;
-    position: relative;
-  }
-
-  /* Background grid texture */
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-image:
       linear-gradient(rgba(0,163,211,0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,163,211,0.03) 1px, transparent 1px);
     background-size: 48px 48px;
-    pointer-events: none;
+    pointer-events: none; z-index: 0;
   }
 
-  .container {
-    text-align: center;
-    padding: 2rem;
-    animation: fadeIn 1.6s ease forwards;
-    opacity: 0;
+  /* ── LOGIN ── */
+  #login {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 2rem; text-align: center;
+    position: relative; z-index: 1;
+    animation: fadeUp 1.2s ease forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .rv { width:1px; height:70px; background:var(--cyan); margin:0 auto 2rem; }
+  .rv-b { width:1px; height:70px; background:var(--cyan); margin:2rem auto 0; }
+  .rh { width:40px; height:1px; background:var(--cyan); margin:0 auto 2rem; }
+
+  .lbl {
+    font-size:11px; letter-spacing:.3em; text-transform:uppercase;
+    color:var(--cyan); margin-bottom:1.4rem;
+  }
+  .name {
+    font-size: clamp(32px,5vw,56px); font-weight:700;
+    color:var(--off); line-height:1.1; margin-bottom:.3rem;
+  }
+  .name span { color:var(--cyan); }
+  .ttl {
+    font-size:15px; font-weight:100; color:var(--mid);
+    letter-spacing:.08em; margin-bottom:2.5rem;
+  }
+  .pw {
+    background:var(--faint); border:none;
+    border-bottom:2px solid var(--cyan);
+    color:var(--off); font-family:'Roboto Slab',Georgia,serif;
+    font-size:18px; font-weight:300; padding:10px 16px;
+    width:200px; text-align:center; letter-spacing:.2em;
+    outline:none; display:block; margin:0 auto 1rem;
+  }
+  .pw:focus { border-bottom-color:var(--off); }
+  .btn {
+    background:var(--cyan); color:var(--black);
+    font-family:'Roboto Slab',Georgia,serif;
+    font-size:11px; font-weight:700; letter-spacing:.25em;
+    text-transform:uppercase; padding:10px 28px;
+    border:none; cursor:pointer; margin-top:.8rem;
+  }
+  .btn:hover { background:var(--off); }
+  .err {
+    font-size:11px; letter-spacing:.15em; text-transform:uppercase;
+    color:var(--red); margin-top:.8rem; min-height:1.4em;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* ── SITE ── */
+  #site { display:none; position:relative; z-index:1; }
 
-  .rule-top {
-    width: 1px;
-    height: 80px;
-    background: var(--cyan);
-    margin: 0 auto 2.5rem;
-    transform-origin: top;
-    animation: growDown 1s ease 0.3s forwards;
-    transform: scaleY(0);
+  .nav {
+    border-bottom:1px solid var(--rule); padding:1.2rem 2rem;
+    display:flex; justify-content:space-between; align-items:center;
   }
+  .nav-name { font-size:13px; font-weight:700; color:var(--off); }
+  .nav-name span { color:var(--cyan); }
+  .nav-lock {
+    font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--mid); background:none; border:none;
+    font-family:'Roboto Slab',Georgia,serif; cursor:pointer;
+  }
+  .nav-lock:hover { color:var(--cyan); }
 
-  @keyframes growDown {
-    to { transform: scaleY(1); }
+  .hero {
+    display:flex; flex-direction:column; align-items:center;
+    justify-content:center; min-height:75vh;
+    text-align:center; padding:2rem;
   }
+  .hero .lbl { margin-bottom:1.4rem; }
+  .hero .name { font-size:clamp(36px,6vw,72px); margin-bottom:.4rem; }
+  .hero .ttl { margin-bottom:2.5rem; }
 
-  .label {
-    font-family: 'Source Serif 4', serif;
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--cyan);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeIn 1s ease 0.8s forwards;
+  /* ARCHIVE */
+  .archive {
+    max-width:860px; margin:0 auto;
+    padding:0 2rem 6rem; border-top:3px solid var(--cyan);
   }
-
-  h1 {
-    font-family: 'Roboto Slab', Georgia, serif;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    color: var(--off);
-    margin-bottom: 0.4rem;
-    opacity: 0;
-    animation: fadeIn 1s ease 1s forwards;
+  .arc-label {
+    font-size:11px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--cyan); padding-top:1.5rem; margin-bottom:.8rem;
   }
-
-  .middle-initial {
-    color: var(--cyan);
+  .arc-head {
+    font-size:22px; font-weight:700; color:var(--off); margin-bottom:1.5rem;
   }
-
-  .title {
-    font-family: 'Roboto Slab', Georgia, serif;
-    font-weight: 100;
-    color: var(--mid);
-    letter-spacing: 0.08em;
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    animation: fadeIn 1s ease 1.2s forwards;
+  .arc-item {
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:.65rem 0; border-bottom:1px solid var(--rule);
+    text-decoration:none; gap:1rem; color:inherit;
   }
-
-  .rule-h {
-    width: 48px;
-    height: 1px;
-    background: var(--cyan);
-    margin: 0 auto 2.5rem;
-    opacity: 0;
-    animation: fadeIn 1s ease 1.4s forwards;
-  }
-
-  .tagline {
-    font-size: clamp(11px, 1.4vw, 13px);
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #555;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeIn 1s ease 1.6s forwards;
-  }
-
-  .coming {
-    display: inline-block;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--black);
-    background: var(--cyan);
-    padding: 8px 20px;
-    font-family: 'Source Serif 4', serif;
-    opacity: 0;
-    animation: fadeIn 1s ease 1.8s forwards;
-  }
-
-  .rule-bottom {
-    width: 1px;
-    height: 80px;
-    background: var(--cyan);
-    margin: 2.5rem auto 0;
-    transform-origin: bottom;
-    animation: growUp 1s ease 0.3s forwards;
-    transform: scaleY(0);
-  }
-
-  @keyframes growUp {
-    to { transform: scaleY(1); }
-  }
-
-  .footer {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #333;
-    opacity: 0;
-    animation: fadeIn 1s ease 2.2s forwards;
-  }
-
-  .footer span {
-    color: var(--cyan);
-    margin: 0 8px;
-  }
+  .arc-item:hover .arc-name { color:var(--cyan); }
+  .arc-name { font-size:14px; font-weight:400; color:var(--off); }
+  .arc-date { font-size:11px; color:var(--mid); font-weight:100; white-space:nowrap; }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="rule-top"></div>
-  <p class="label">YCuBeD Publishers</p>
-  <h1>Mouli <span class="middle-initial">G</span> Marur</h1>
-  <p class="title">Designer. &nbsp;DocuMentor. &nbsp;Publisher.</p>
-  <div class="rule-h"></div>
-
-  <span class="coming">Site launching soon</span>
-  <div class="rule-bottom"></div>
+<!-- LOGIN -->
+<div id="login">
+  <div class="rv"></div>
+  <p class="lbl">moulimarur.com</p>
+  <h1 class="name">Mouli <span>G</span> Marur</h1>
+  <p class="ttl">Designer. &nbsp;DocuMentor. &nbsp;Publisher.</p>
+  <div class="rh"></div>
+  <input type="password" class="pw" id="pw" placeholder="· · · · · · · ·" onkeydown="if(event.key==='Enter')auth()">
+  <button class="btn" onclick="auth()">Enter</button>
+  <p class="err" id="err"></p>
+  <div class="rv-b"></div>
 </div>
 
+<!-- SITE -->
+<div id="site">
+  <nav class="nav">
+    <span class="nav-name">Mouli <span>G</span> Marur</span>
+    <button class="nav-lock" onclick="lock()">Lock</button>
+  </nav>
 
+  <div class="hero">
+    <p class="lbl">YCuBeD Publishers · Working Studio</p>
+    <h1 class="name">Mouli <span>G</span> Marur</h1>
+    <p class="ttl">Designer. &nbsp;DocuMentor. &nbsp;Publisher.</p>
+    <div class="rh"></div>
+  </div>
 
+  <div class="archive">
+    <p class="arc-label">Session Archive</p>
+    <h2 class="arc-head">Documents</h2>
+    <a class="arc-item" href="24apr26_001.html">
+      <span class="arc-name">24apr26_001 &nbsp;·&nbsp; Session 01 — Biography · Infrastructure · Domains · GitHub · moulimarur.com Live</span>
+      <span class="arc-date">24 Apr 2026</span>
+    </a>
+  </div>
+</div>
+
+<script>
+  function auth() {
+    if (document.getElementById('pw').value === 'Potto5589') {
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('site').style.display = 'block';
+      document.getElementById('err').textContent = '';
+    } else {
+      document.getElementById('err').textContent = 'Incorrect — try again.';
+      document.getElementById('pw').value = '';
+      document.getElementById('pw').focus();
+    }
+  }
+  function lock() {
+    document.getElementById('site').style.display = 'none';
+    document.getElementById('login').style.display = 'flex';
+    document.getElementById('pw').value = '';
+  }
+</script>
 </body>
 </html>
