@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shodo_One · mgm · 2024</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cyan: #00A3D3;
+    --black: #495f65;
+    --off: #e8e2d6;
+    --mid: #888;
+    --faint: #111;
+    --rule: #1e1e1e;
+  }
+
+  html, body {
+    background: var(--black);
+    color: var(--off);
+    font-family: 'Roboto Slab', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,163,211,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,163,211,0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0;
+    border-bottom: 1px solid var(--rule);
+    padding: 1rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(8,8,8,0.95);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+  .nav-left { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); }
+  .nav-left a { color: var(--cyan); text-decoration: none; }
+  .nav-left a:hover { color: var(--off); }
+  .nav-right { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); }
+
+  /* HERO */
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-bottom: 3px solid var(--cyan);
+    position: relative; z-index: 1;
+  }
+  .hero-label { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1rem; }
+  .hero-title { font-size: clamp(36px, 6vw, 72px); font-weight: 700; color: var(--off); line-height: 1.05; margin-bottom: 0.5rem; }
+  .hero-title span { color: var(--cyan); }
+  .hero-sub { font-size: 15px; font-weight: 100; color: var(--mid); letter-spacing: 0.08em; margin-bottom: 2rem; }
+  .hero-desc { font-size: 14px; color: #a09888; max-width: 600px; line-height: 1.8; }
+
+  /* SERIES META */
+  .meta-bar {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+    gap: 0;
+    border-bottom: 1px solid var(--rule);
+    position: relative; z-index: 1;
+  }
+  .meta-item {
+    padding: 1.2rem 2rem;
+    border-right: 1px solid var(--rule);
+  }
+  .meta-item:last-child { border-right: none; }
+  .meta-key { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cyan); margin-bottom: 4px; }
+  .meta-val { font-size: 13px; color: var(--off); font-weight: 400; }
+
+  /* GRID */
+  .grid-section {
+    max-width: 1100px; margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+    position: relative; z-index: 1;
+  }
+  .grid-label { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--cyan); margin-bottom: 2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--rule); }
+
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+
+  .work-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--faint);
+    cursor: pointer;
+  }
+
+  .work-card img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s ease, filter 0.4s ease;
+    filter: brightness(0.85);
+  }
+
+  .work-card:hover img {
+    transform: scale(1.03);
+    filter: brightness(1);
+  }
+
+  .work-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.3) 50%, transparent 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 1.25rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .work-card:hover .work-overlay { opacity: 1; }
+
+  .work-num { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cyan); margin-bottom: 4px; }
+  .work-title { font-size: 15px; font-weight: 700; color: var(--off); margin-bottom: 2px; line-height: 1.2; }
+  .work-sub { font-size: 12px; color: var(--mid); font-weight: 100; }
+
+  /* WIDE CARDS */
+  .work-card.wide { grid-column: span 2; }
+  .work-card.tall { grid-row: span 2; }
+
+  /* CAPTION STRIP — always visible on mobile */
+  .work-caption {
+    padding: 0.6rem 1rem;
+    background: var(--faint);
+    border-top: 1px solid var(--rule);
+  }
+  .work-caption-num { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); }
+  .work-caption-title { font-size: 13px; color: var(--off); font-weight: 400; }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--rule);
+    padding: 1.5rem 2rem;
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    position: relative; z-index: 1;
+  }
+  .footer-l { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #333; }
+  .footer-r { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cyan); }
+
+  @media (max-width: 600px) {
+    .work-card.wide { grid-column: span 1; }
+    .work-overlay { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-left"><a href="index.html">moulimarur.com</a> &nbsp;/&nbsp; Shodo_One</span>
+  <span class="nav-right">mgm · 2024</span>
+</nav>
+
+<div class="hero">
+  <p class="hero-label">Origins Series · Calligraphy & Mark-Making</p>
+  <h1 class="hero-title">Shodo<span>_</span>One</h1>
+  <p class="hero-sub">mgm · 2024 · 19 works</p>
+  <p class="hero-desc">A body of calligraphic and mark-making works produced in 2024. ShoDoEsQue — Pilot Parallel Pen, stiff metal nib, brush, ink on various grounds. Kanji, Katakana, Hiragana, Roman script, ENso, AseMiX and mixed media. Every mark intentional.</p>
+</div>
+
+<div class="meta-bar">
+  <div class="meta-item"><div class="meta-key">Series</div><div class="meta-val">Shodo_One</div></div>
+  <div class="meta-item"><div class="meta-key">Year</div><div class="meta-val">2024</div></div>
+  <div class="meta-item"><div class="meta-key">Works</div><div class="meta-val">19</div></div>
+  <div class="meta-item"><div class="meta-key">Medium</div><div class="meta-val">ShoDoEsQue · Ink</div></div>
+  <div class="meta-item"><div class="meta-key">Instrument</div><div class="meta-val">Pilot Parallel Pen</div></div>
+  <div class="meta-item"><div class="meta-key">Artist</div><div class="meta-val">Mouli G Marur</div></div>
+</div>
+
+<div class="grid-section">
+  <p class="grid-label">Works · 01–19 · All marks intentional</p>
+
+  <div class="works-grid">
+
+    <div class="work-card wide">
+      <img src="shodo/01_light_sky_harmony.jpg" alt="Light Sky Harmony — 光空和">
+      <div class="work-overlay">
+        <div class="work-num">01</div>
+        <div class="work-title">光空和</div>
+        <div class="work-sub">Light · Sky · Harmony</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">01</div><div class="work-caption-title">光空和 · Light · Sky · Harmony</div></div>
+    </div>
+
+    <div class="work-card wide">
+      <img src="shodo/02_internal_xternal.jpg" alt="Internal Xternal — 内外">
+      <div class="work-overlay">
+        <div class="work-num">02</div>
+        <div class="work-title">内 · 外</div>
+        <div class="work-sub">Internal · Xternal</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">02</div><div class="work-caption-title">内外 · Internal · Xternal</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/03_ocean_rumi.jpg" alt="Ocean — 海 — Rumi">
+      <div class="work-overlay">
+        <div class="work-num">03</div>
+        <div class="work-title">海</div>
+        <div class="work-sub">Ocean · Rumi</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">03</div><div class="work-caption-title">海 · Ocean · Rumi sutra</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/04_shuhari.jpg" alt="Shuhari — 守破離">
+      <div class="work-overlay">
+        <div class="work-num">04</div>
+        <div class="work-title">守破離</div>
+        <div class="work-sub">Shuhari</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">04</div><div class="work-caption-title">守破離 · Shuhari</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/05_tanoshi.jpg" alt="Tanoshi — Joy">
+      <div class="work-overlay">
+        <div class="work-num">05</div>
+        <div class="work-title">たのし</div>
+        <div class="work-sub">Tanoshi · Joy</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">05</div><div class="work-caption-title">Tanoshi · Joy · vertical</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/06_canvas_mark.jpg" alt="Canvas texture mark — mgm monogram">
+      <div class="work-overlay">
+        <div class="work-num">06</div>
+        <div class="work-title">Mark</div>
+        <div class="work-sub">Canvas · mgm monogram</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">06</div><div class="work-caption-title">Canvas texture · mgm monogram mark</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/07_enso_imperfection.jpg" alt="ENso — Circle of Imperfection">
+      <div class="work-overlay">
+        <div class="work-num">07</div>
+        <div class="work-title">ENso</div>
+        <div class="work-sub">Circle of Imperfection</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">07</div><div class="work-caption-title">ENso · Circle of Imperfection</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/08_abundant_imperfection.jpg" alt="ENso — Abundant Imperfection">
+      <div class="work-overlay">
+        <div class="work-num">08</div>
+        <div class="work-title">ENso</div>
+        <div class="work-sub">Abundant Imperfection</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">08</div><div class="work-caption-title">ENso · Abundant Imperfection</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/09_void_empty.jpg" alt="VOID — Not Simply Empty">
+      <div class="work-overlay">
+        <div class="work-num">09</div>
+        <div class="work-title">VOID</div>
+        <div class="work-sub">Not Simply Empty</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">09</div><div class="work-caption-title">VOID · Not Simply Empty</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/10_enso_series.jpg" alt="ENso series — multiple circles">
+      <div class="work-overlay">
+        <div class="work-num">10</div>
+        <div class="work-title">ENso Series</div>
+        <div class="work-sub">Multiple circles</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">10</div><div class="work-caption-title">ENso series · multiple circles</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/11_nothing_constant.jpg" alt="Nothing is Constant — Like Candle in Wind">
+      <div class="work-overlay">
+        <div class="work-num">11</div>
+        <div class="work-title">無常</div>
+        <div class="work-sub">Nothing is Constant</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">11</div><div class="work-caption-title">無常 · Nothing is Constant · Like Candle in Wind</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/12_flow.jpg" alt="FLOW — rainbow ground">
+      <div class="work-overlay">
+        <div class="work-num">12</div>
+        <div class="work-title">FLOW</div>
+        <div class="work-sub">Rainbow ground</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">12</div><div class="work-caption-title">FLOW · rainbow ground</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/13_asemix_purple.jpg" alt="AseMiX — purple ink">
+      <div class="work-overlay">
+        <div class="work-num">13</div>
+        <div class="work-title">AseMiX</div>
+        <div class="work-sub">Purple ink · tree form</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">13</div><div class="work-caption-title">AseMiX · purple ink · tree form</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/14_asemix_ink.jpg" alt="AseMiX — ink splash">
+      <div class="work-overlay">
+        <div class="work-num">14</div>
+        <div class="work-title">AseMiX</div>
+        <div class="work-sub">Ink · splash · Kanji ground</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">14</div><div class="work-caption-title">AseMiX · ink · Kanji ground</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/15_asemix_dense.jpg" alt="AseMiX — dense composition">
+      <div class="work-overlay">
+        <div class="work-num">15</div>
+        <div class="work-title">AseMiX</div>
+        <div class="work-sub">Dense · ENso within</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">15</div><div class="work-caption-title">AseMiX · dense · ENso within</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/16_asemix_treble.jpg" alt="AseMiX — treble form">
+      <div class="work-overlay">
+        <div class="work-num">16</div>
+        <div class="work-title">AseMiX</div>
+        <div class="work-sub">Treble form · diagonal</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">16</div><div class="work-caption-title">AseMiX · treble form · diagonal</div></div>
+    </div>
+
+    <div class="work-card wide">
+      <img src="shodo/17_katakana_yellow.jpg" alt="Katakana — yellow ground — landscape">
+      <div class="work-overlay">
+        <div class="work-num">17</div>
+        <div class="work-title">カタカナ</div>
+        <div class="work-sub">Katakana · yellow ground · landscape</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">17</div><div class="work-caption-title">Katakana · yellow ground · landscape</div></div>
+    </div>
+
+    <div class="work-card wide">
+      <img src="shodo/18_hiragana_green.jpg" alt="Hiragana — green ground — landscape">
+      <div class="work-overlay">
+        <div class="work-num">18</div>
+        <div class="work-title">ひらがな</div>
+        <div class="work-sub">Hiragana · green ground · landscape</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">18</div><div class="work-caption-title">Hiragana · green ground · landscape</div></div>
+    </div>
+
+    <div class="work-card">
+      <img src="shodo/19_violet_spray.jpg" alt="Mixed media — violet spray — ENso — ink">
+      <div class="work-overlay">
+        <div class="work-num">19</div>
+        <div class="work-title">Mixed Media</div>
+        <div class="work-sub">Violet spray · ENso · ink</div>
+      </div>
+      <div class="work-caption"><div class="work-caption-num">19</div><div class="work-caption-title">Mixed media · violet spray · ENso · ink</div></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+  <span class="footer-l">Shodo_One · mgm · 2024 · moulimarur.com</span>
+  <span class="footer-r">YCuBeD Publishers · Origins Series</span>
+</div>
+
+</body>
+</html>
