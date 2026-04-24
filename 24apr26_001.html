@@ -10,7 +10,7 @@
 
   :root {
     --cyan: #00A3D3;
-    --black: #080808;
+    --black: #495f65;
     --off: #e8e2d6;
     --mid: #888;
     --faint: #1a1a1a;
@@ -53,7 +53,7 @@
   }
 
   .masthead-label {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--cyan);
@@ -71,10 +71,7 @@
   .masthead h1 span { color: var(--cyan); }
 
   .masthead-sub {
-    font-size: 13px;
-    color: var(--mid);
-    letter-spacing: 0.08em;
-    font-weight: 100;
+    font-size: 15px;
   }
 
   /* SESSION META */
@@ -86,12 +83,7 @@
     border-left: 3px solid var(--cyan);
     padding: 1.25rem 1.5rem;
     margin-bottom: 3rem;
-    font-size: 12px;
-  }
-
-  .meta-item strong {
-    display: block;
-    font-size: 9px;
+    font-size: 14px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--cyan);
@@ -112,7 +104,7 @@
   }
 
   .section-label {
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--cyan);
@@ -130,8 +122,13 @@
   .section p {
     font-size: 14px;
     color: #b0a898;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0;
+    text-indent: 2em;
     font-weight: 300;
+  }
+
+  .section p:first-of-type {
+    text-indent: 0;
   }
 
   /* DECISIONS LIST */
@@ -141,9 +138,8 @@
   }
 
   .decisions li {
-    font-size: 13px;
-    color: #b0a898;
-    padding: 0.6rem 0 0.6rem 1.2rem;
+    font-size: 14px;
+    padding: 0.3rem 0 0.3rem 1.4em;
     border-bottom: 1px solid var(--rule);
     position: relative;
     font-weight: 300;
@@ -177,16 +173,12 @@
   }
 
   .file-card .file-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--cyan);
-    margin-bottom: 4px;
+    font-size: 14px;
     word-break: break-all;
   }
 
   .file-card .file-desc {
-    font-size: 11px;
-    color: var(--mid);
+    font-size: 14px;
     font-weight: 300;
     line-height: 1.5;
   }
@@ -205,7 +197,7 @@
   }
 
   .term-key {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--cyan);
     padding: 0.6rem 1rem;
@@ -214,7 +206,7 @@
   }
 
   .term-val {
-    font-size: 12px;
+    font-size: 14px;
     color: #b0a898;
     padding: 0.6rem 1rem;
     border-bottom: 1px solid var(--rule);
@@ -230,9 +222,9 @@
   }
 
   .next p {
-    font-size: 13px;
+    font-size: 14px;
     color: #b0a898;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
   }
 
   .next p:last-child { margin-bottom: 0; }
@@ -250,14 +242,14 @@
   }
 
   .footer-left {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #333;
   }
 
   .footer-right {
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--cyan);
